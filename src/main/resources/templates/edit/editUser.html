@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8"/>
+    <title>My settings</title>
+    <link rel="icon" type="image/ico" th:href="@{/images/icons/common.ico}"/>
+    <link th:href="@{css/bootstrap.min.css}" rel="stylesheet">
+</head>
+<body class="bg-light">
+<div class="container">
+    <div class="py-5 text-center">
+        <a href="/home">Back to main</a>
+        <h2>Edit account '<span th:text="${username}"></span>'</h2>
+        <p class="lead">Please do logout from account for apply changing</p>
+    </div>
+    <div class="row d-flex justify-content-center">
+        <div class="col-md-8 order-md-1">
+            <h4 class="mb-3">Changing data</h4>
+            <form method="post" action="/edit">
+                <div class="mb-3">
+                    <label for="idPassword">Password</label>
+                    <input class="form-control" type="password" name="password" id="idPassword"
+                           placeholder="Input new password"
+                           th:value="${user.password}" oninvalid="setCustomValidity('Input password')" oninput="setCustomValidity('')" required/>
+                </div>
+                <div class="mb-3">
+                    <label for="idFirstName">First name</label>
+                    <input class="form-control" type="text" name="firstName" id="idFirstName" placeholder="First name"
+                           th:value="${firstName}" required/>
+                </div>
+                <div class="mb-3">
+                    <label for="idLastName">Last name</label>
+                    <input class="form-control" type="text" name="lastName" id="idLastName" placeholder="Last name"
+                           th:value="${lastName}"
+                           required/>
+                </div>
+                <div class="mb-3">
+                    <label for="idTitle">Title of firm</label>
+                    <input class="form-control" type="text" name="title" id="idTitle" placeholder="Title of firm"
+                           th:value="${title}"
+                           required/>
+                </div>
+                <div class="mb-3">
+                    <label for="idEdrpou">Edrpou code</label>
+                    <input class="form-control" type="text" name="edrpouCode" id="idEdrpou" placeholder="Edrpou code"
+                           th:value="${edrpou}"
+                           required/>
+                </div>
+                <div class="mb-3">
+                    <label for="idAddress">Address</label>
+                    <input class="form-control" type="text" name="address" id="idAddress" placeholder="Address"
+                           th:value="${address}"
+                           required/>
+                </div>
+                <div class="mb-3">
+                    <label for="idTelephone">Telephone</label>
+                    <input class="form-control" type="text" name="telephone" id="idTelephone" placeholder="Telephone"
+                           th:value="${telephone}"
+                           required/>
+                </div>
+                <div class="mb-3">
+                    <label for="idEmail">E-mail</label>
+                    <input class="form-control" type="text" name="email" id="idEmail" placeholder="Email"
+                           th:value="${email}" required/>
+                </div>
+                <hr class="mb-4">
+                <button class="btn btn-primary btn-lg btn-block" type="submit">Change data</button>
+            </form>
+            <br/>
+        </div>
+    </div>
+</div>
+</body>
+</html>

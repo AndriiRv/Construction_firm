@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Report</title>
+    <link rel="icon" type="image/ico" th:href="@{/images/icons/common.ico}"/>
+    <link th:href="@{css/bootstrap.min.css}" rel="stylesheet">
+    <link th:href="@{css/backToTop.css}" rel="stylesheet">
+</head>
+<body class="bg-light">
+<div class="container">
+    <div class="py-5 text-center">
+        <a href="/home">Back to main</a>
+        <h2>Report page</h2>
+        <p class="lead">View's of reports</p>
+    </div>
+    <div class="row d-flex justify-content-center">
+        <div class="grid">
+            <div class="row">
+                <h4>All of workers with first name which begin on character 'M'</h4>
+            </div>
+            <div class="row justify-content-center"><p class="lead">SELECT * FROM worker WHERE first_name LIKE('M%')</p>
+            </div>
+        </div>
+        <table class="table table-bordered table-hover">
+            <thead>
+            <tr>
+                <th style="width: 5%" scope="col">ID</th>
+                <th style="width: 15%" scope="col">First name</th>
+                <th style="width: 15%" scope="col">Last name</th>
+                <th style="width: 10%" scope="col">Telephone</th>
+                <th style="width: 10%" scope="col">Address</th>
+                <th style="width: 15%" scope="col">E-mail</th>
+                <th style="width: 10%" scope="col">Busy</th>
+                <th style="width: 10%" scope="col">Working on</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="worker: ${simpleQueryOnSelect}" class="table-success">
+                <td th:text="${worker.id}"></td>
+                <td th:text="${worker.firstName}"></td>
+                <td th:text="${worker.lastName}"></td>
+                <td th:text="${worker.telephone}"></td>
+                <td th:text="${worker.address}"></td>
+                <td th:text="${worker.email}"></td>
+                <td th:text="${worker.busy}"></td>
+                <td th:text="${worker.title}"></td>
+            </tr>
+            </tbody>
+        </table>
+        <h4>Instruments, which bought between '2017-01-01' and '2019-01-01'</h4>
+        <p class="lead">SELECT * FROM instrument WHERE date_of_purchase
+            BETWEEN '2017-01-01' AND '2019-01-01'</p>
+        <table class="table table-bordered table-hover">
+            <thead>
+            <tr>
+                <th style="width: 5%" scope="col">ID</th>
+                <th style="width: 45%" scope="col">Title of instrument</th>
+                <th style="width: 30%" scope="col">Purchase price</th>
+                <th style="width: 20%" scope="col">Date of purchase</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="instrument: ${queryOnSelectWithBetweenAnd}" class="table-success">
+                <td th:text="${instrument.id}"></td>
+                <td th:text="${instrument.title}"></td>
+                <td th:text="${#numbers.formatDecimal(instrument.price, 0, 'COMMA', 2, 'POINT')}"></td>
+                <td th:text="${instrument.date}"></td>
+            </tr>
+            </tbody>
+        </table>
+        <h4>Materials, which bought in this date: 2018-02-08, 2018-09-17, 2018-11-22, 2017-07-16</h4>
+        <p class="lead">SELECT * FROM material WHERE date_of_purchase IN ('2018-02-08', '2018-09-17', '2018-11-22',
+            '2017-07-16')</p>
+        <table class="table table-bordered table-hover">
+            <thead>
+            <tr>
+                <th style="width: 5%" scope="col">ID</th>
+                <th style="width: 45%" scope="col">Title of material</th>
+                <th style="width: 30%" scope="col">Purchase price</th>
+                <th style="width: 20%" scope="col">Date of purchase</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="material: ${queryOnSelectWithIn}" class="table-success">
+                <td th:text="${material.id}"></td>
+                <td th:text="${material.title}"></td>
+                <td th:text="${#numbers.formatDecimal(material.price, 0, 'COMMA', 2, 'POINT')}"></td>
+                <td th:text="${material.date}"></td>
+            </tr>
+            </tbody>
+        </table>
+        <h4>Orders, which has title, in which has word 'building' and price more 12,500,000.00</h4>
+        <p class="lead">SELECT * FROM \"" + "order" + "\" WHERE title LIKE('%building%') AND price >= '12500000'</p>
+        <table class="table table-bordered table-hover">
+            <thead>
+            <tr>
+                <th style="width: 5%" scope="col">ID</th>
+                <th style="width: 45%" scope="col">Title of order</th>
+                <th style="width: 30%" scope="col">Price</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="order: ${queryOnSelectWithAnd}" class="table-success">
+                <td th:text="${order.idOrder}"></td>
+                <td th:text="${order.title}"></td>
+                <td th:text="${#numbers.formatDecimal(order.price, 0, 'COMMA', 2, 'POINT')}"></td>
+            </tr>
+            </tbody>
+        </table>
+        <h4>Materials, which has date of purchase more and equal = '2018-02-08' or purchase price = '150,000.00'</h4>
+        <p class="lead">SELECT * FROM material WHERE date_of_purchase >= '2018-02-08' OR purchase_price >= '150000'</p>
+        <table class="table table-bordered table-hover">
+            <thead>
+            <tr>
+                <th style="width: 5%" scope="col">ID</th>
+                <th style="width: 45%" scope="col">Title of material</th>
+                <th style="width: 30%" scope="col">Purchase price</th>
+                <th style="width: 20%" scope="col">Date of purchase</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="material: ${queryOnSelectWithOr}" class="table-success">
+                <td th:text="${material.id}"></td>
+                <td th:text="${material.title}"></td>
+                <td th:text="${#numbers.formatDecimal(material.price, 0, 'COMMA', 2, 'POINT')}"></td>
+                <td th:text="${material.date}"></td>
+            </tr>
+            </tbody>
+        </table>
+        <h4>Orders with deleted duplicate title</h4>
+        <p class="lead">SELECT DISTINCT o.* FROM \"" + "order" + "\" AS o INNER JOIN provided_order AS po ON po.id_order
+            = o.id</p>
+        <table class="table table-bordered table-hover">
+            <thead>
+            <tr>
+                <th style="width: 5%" scope="col">ID</th>
+                <th style="width: 45%" scope="col">Title of order</th>
+                <th style="width: 30%" scope="col">Price</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="order: ${queryOnSelectWithDistinct}" class="table-success">
+                <td th:text="${order.idOrder}"></td>
+                <td th:text="${order.title}"></td>
+                <td th:text="${#numbers.formatDecimal(order.price, 0, 'COMMA', 2, 'POINT')}"></td>
+            </tr>
+            </tbody>
+        </table>
+        <h4>Instrument, which has minimal purchase price</h4>
+        <p class="lead">SELECT id, title_of_instrument, min(purchase_price), date_of_purchase FROM instrument GROUP BY
+            id ORDER BY purchase_price LIMIT 1</p>
+        <table class="table table-bordered table-hover">
+            <thead>
+            <tr>
+                <th style="width: 5%" scope="col">ID</th>
+                <th style="width: 45%" scope="col">Title of instrument</th>
+                <th style="width: 30%" scope="col">Min purchase price</th>
+                <th style="width: 20%" scope="col">Date of purchase</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="instrument: ${queryOnSelectWithMin}" class="table-success">
+                <td th:text="${instrument.id}"></td>
+                <td th:text="${instrument.title}"></td>
+                <td th:text="${#numbers.formatDecimal(instrument.price, 0, 'COMMA', 2, 'POINT')}"></td>
+                <td th:text="${instrument.date}"></td>
+            </tr>
+            </tbody>
+        </table>
+        <div class="grid">
+            <div class="row">
+                <h4>Sum all of material</h4>
+            </div>
+            <div class="row justify-content-center"><p class="lead">SELECT sum(purchase_price) AS purchase_price FROM
+                material</p></div>
+        </div>
+        <table class="table table-bordered table-hover">
+            <thead>
+            <tr>
+                <th scope="col">Sum of purchase price</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="material: ${queryOnSelectWithSum}" class="table-success">
+                <td th:text="${#numbers.formatDecimal(material.price, 0, 'COMMA', 2, 'POINT')}"></td>
+            </tr>
+            </tbody>
+        </table>
+        <div class="grid">
+            <div class="row">
+                <h4>Count of customers</h4>
+            </div>
+            <div class="row justify-content-center"><p class="lead">SELECT count(id) AS id FROM customer</p></div>
+        </div>
+        <table class="table table-bordered table-hover">
+            <thead>
+            <tr>
+                <th scope="col">Count of customer</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="user: ${queryOnSelectWithCount}" class="table-success">
+                <td th:text="${user.id}"></td>
+            </tr>
+            </tbody>
+        </table>
+        <h4>Instrument, which has maximal purchase prise, on the date = '2019-01-07'</h4>
+        <p class="lead">SELECT id, title_of_instrument, max(purchase_price), date_of_purchase FROM instrument WHERE
+            date_of_purchase >= '2019-01-07' GROUP BY id ORDER BY purchase_price DESC</p>
+        <table class="table table-bordered table-hover">
+            <thead>
+            <tr>
+                <th style="width: 5%" scope="col">ID</th>
+                <th style="width: 45%" scope="col">Title of instrument</th>
+                <th style="width: 30%" scope="col">Max purchase price</th>
+                <th style="width: 20%" scope="col">Date of purchase</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="instrument: ${queryOnSelectWithMaxAndWhere}" class="table-success">
+                <td th:text="${instrument.id}"></td>
+                <td th:text="${instrument.title}"></td>
+                <td th:text="${#numbers.formatDecimal(instrument.price, 0, 'COMMA', 2, 'POINT')}"></td>
+                <td th:text="${instrument.date}"></td>
+            </tr>
+            </tbody>
+        </table>
+        <h4>Relation 'Left Join' between 'Instrument' and 'Provided order'</h4>
+        <p class="lead">SELECT * FROM instrument_order AS io LEFT JOIN instrument AS i ON io.id_instrument = i.id</p>
+        <table class="table table-bordered table-hover">
+            <thead>
+            <tr>
+                <th style="width: 10%" scope="col">ID order</th>
+                <th style="width: 10%" scope="col">ID instrument</th>
+                <th style="width: 30%" scope="col">Title of instrument</th>
+                <th style="width: 20%" scope="col">Purchase price</th>
+                <th style="width: 25%" scope="col">Date of purchase</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="order: ${queryOnSelectWithLeftJoin}" class="table-success">
+                <td th:text="${order.idOrder}"></td>
+                <td th:text="${order.id}"></td>
+                <td th:text="${order.title}"></td>
+                <td th:text="${#numbers.formatDecimal(order.price, 0, 'COMMA', 2, 'POINT')}"></td>
+                <td th:text="${order.date}"></td>
+            </tr>
+            </tbody>
+        </table>
+        <h4>Relation 'Right Join' between 'Instrument' and 'Provided order'</h4>
+        <p class="lead">SELECT * FROM instrument_order AS io RIGHT JOIN instrument AS i ON io.id_instrument = i.id</p>
+        <table class="table table-bordered table-hover">
+            <thead>
+            <tr>
+                <th style="width: 10%" scope="col">ID order</th>
+                <th style="width: 10%" scope="col">ID instrument</th>
+                <th style="width: 30%" scope="col">Title of instrument</th>
+                <th style="width: 20%" scope="col">Purchase price</th>
+                <th style="width: 25%" scope="col">Date of purchase</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="order: ${queryOnSelectWithRightJoin}" class="table-success">
+                <td th:text="${order.idOrder}"></td>
+                <td th:text="${order.id}"></td>
+                <td th:text="${order.title}"></td>
+                <td th:text="${#numbers.formatDecimal(order.price, 0, 'COMMA', 2, 'POINT')}"></td>
+                <td th:text="${order.date}"></td>
+            </tr>
+            </tbody>
+        </table>
+        <h4>Customers, which have number of telephone, which start with '097'</h4>
+        <p class="lead">SELECT * FROM customer AS c INNER JOIN users AS u ON c.id_users = u.id WHERE telephone
+            LIKE('097%')</p>
+        <table class="table table-bordered table-hover">
+            <thead>
+            <tr>
+                <th style="width: 5%" scope="col">ID</th>
+                <th style="width: 10%" scope="col">First name</th>
+                <th style="width: 30%" scope="col">Last name</th>
+                <th style="width: 20%" scope="col">Title of firm</th>
+                <th style="width: 25%" scope="col">Address</th>
+                <th style="width: 25%" scope="col">E-mail</th>
+                <th style="width: 25%" scope="col">Edrpou</th>
+                <th style="width: 25%" scope="col">Telephone</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="user: ${queryOnSelectWithInnerJoinAndLike}" class="table-success">
+                <td th:text="${user.id}"></td>
+                <td th:text="${user.firstName}"></td>
+                <td th:text="${user.lastName}"></td>
+                <td th:text="${user.title}"></td>
+                <td th:text="${user.address}"></td>
+                <td th:text="${user.email}"></td>
+                <td th:text="${user.edrpouCode}"></td>
+                <td th:text="${user.telephone}"></td>
+            </tr>
+            </tbody>
+        </table>
+        <h4>Count of customers, which have role = 'USER'</h4>
+        <p class="lead">SELECT count(c.id) FROM customer AS c INNER JOIN users AS u ON c.id_users = u.id WHERE u.role =
+            'USER'</p>
+        <table class="table table-bordered table-hover">
+            <thead>
+            <tr>
+                <th scope="col">Count of customer</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="user: ${queryOnSelectWithCountAndInnerJoin}" class="table-success">
+                <td th:text="${user.id}"></td>
+            </tr>
+            </tbody>
+        </table>
+        <h4>Count of material on each other order</h4>
+        <p class="lead">SELECT count(m.id_material), po.* FROM provided_order AS po INNER JOIN material_order AS m ON
+            po.id = m.id_provided_order GROUP BY po.id</p>
+        <table class="table table-bordered table-hover">
+            <thead>
+            <tr>
+                <th style="width: 10%" scope="col">ID order</th>
+                <th style="width: 10%" scope="col">Count of materials</th>
+                <th style="width: 30%" scope="col">Title of order</th>
+                <th style="width: 20%" scope="col">Purchase price</th>
+                <th style="width: 25%" scope="col">Date of purchase</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="order: ${queryOnSelectWithCountAndInnerJoinAndHaving}" class="table-success">
+                <td th:text="${order.id}"></td>
+                <td th:text="${order.idMaterial}"></td>
+                <td th:text="${order.title}"></td>
+                <td th:text="${#numbers.formatDecimal(order.price, 0, 'COMMA', 2, 'POINT')}"></td>
+                <td th:text="${order.date}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<a href="#" id="back-to-top" title="Back to top">&uarr;</a>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script th:src="@{/js/backToTop.js}"></script>
+</body>
+</html>

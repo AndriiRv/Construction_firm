@@ -1,0 +1,27 @@
+.overlay {
+    display: none;
+    position: absolute;
+    top: 0;
+    background: #000;
+    width: 100%;
+    height: 100vh;
+    white-space: nowrap;
+    text-align: center;
+}
+
+.overlay img {
+    width: 100%;
+    border: 5px solid #000;
+    vertical-align: middle;
+}
+
+.helper {
+    display: inline-block;
+    height: 100%;
+    vertical-align: middle;
+}
+
+#imgSelect {
+    border: 2px solid black;
+    display: none;
+}

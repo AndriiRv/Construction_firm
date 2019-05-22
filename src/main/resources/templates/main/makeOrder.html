@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Ordering</title>
+    <link rel="icon" type="image/ico" th:href="@{/images/icons/common.ico}"/>
+    <link th:href="@{css/bootstrap.min.css}" rel="stylesheet">
+    <link th:href="@{css/imageOnOrderAndOnAccount.css}" rel="stylesheet" type="text/css">
+</head>
+<body class="bg-light">
+<div class="container">
+    <div class="py-5 text-center">
+        <a href="/home">Back to main</a>
+        <h2>Order form</h2>
+        <p class="lead">Below you can fill out an order form for further collaboration with you</p>
+    </div>
+    <div class="row d-flex justify-content-center">
+        <div class="col-md-8 order-md-1">
+            <h4 class="mb-3">Make the order</h4>
+            <form method="post" action="/order" id="formOrder" data-toggle="validator" role="form">
+                <div class="row">
+                    <div class="col-md-5 mb-3" th:object="${templateOrderList}">
+                        <label for="idOrder">Type of order</label>
+                        <select size="4" name="titleOfOrder" id="idOrder" class="custom-select d-block w-100"
+                                required>
+                            <option th:each="order: ${templateOrderList}"
+                                    th:value="${order.title}"
+                                    th:text="${order.title} + ' - ' + ${#numbers.formatDecimal(order.price, 0, 'COMMA', 2, 'POINT')}"></option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="username">Your username</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">@</span>
+                            </div>
+                            <input type="text" name="customerUsername" class="form-control" id="username"
+                                   placeholder="Username" th:value="${username}" readonly>
+                        </div>
+                        <label for="idDate">Current date</label>
+                        <input type="text" class="form-control" id="idDate" readonly>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label for="idAddress">Address</label>
+                    <input type="text" class="form-control" name="address" placeholder="Address" id="idAddress"
+                           th:value="${order.address}" required>
+                </div>
+                <hr class="mb-4">
+                <button class="btn btn-primary btn-lg btn-block" id="submitBtn" type="submit">Complete order</button>
+            </form>
+        </div>
+        <img class="mb-4" id="imgSelect" width="480" height="270" src="" alt="" style="cursor: pointer"/>
+        <div class="overlay"><span class="helper"></span><img src="" alt="" style="cursor: pointer"></div>
+    </div>
+</div>
+<script th:src="@{/js/currentDate.js}"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script th:src="@{/js/manipulationWithImage/visualChoiceInMakeOrder.js}"></script>
+</body>
+</html>

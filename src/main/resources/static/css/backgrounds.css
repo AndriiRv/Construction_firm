@@ -1,0 +1,43 @@
+.errorsAndAccessDeniedBgImage, body {
+    background: linear-gradient(rgba(0, 0, 0, 0.7),
+    rgba(0, 0, 0, 0.7)),
+    url('../images/error.jpg');
+    background-attachment: fixed;
+    background-size: cover;
+}
+
+.container-login100 {
+    background-image: url('../images/bg-01.jpg');
+}
+
+.registrationBgImage {
+    background: linear-gradient(rgba(0, 0, 0, 0.7),
+    rgba(0, 0, 0, 0.7)),
+    url('../images/bg-01.jpg');
+    background-attachment: fixed;
+    background-size: cover;
+}
+
+.indexAndGalleryBgImage, body {
+    background: linear-gradient(rgba(0, 0, 0, 0.7),
+    rgba(0, 0, 0, 0.7)),
+    url('../images/slider.jpg');
+    background-attachment: fixed;
+    background-size: cover;
+}
+
+#homePageBgImage, body {
+    background: linear-gradient(rgba(0, 0, 0, 0.7),
+    rgba(0, 0, 0, 0.7)),
+    url('../images/apex.jpg');
+    background-attachment: fixed;
+    background-size: cover;
+}
+
+#aboutUsBgImage, body {
+    background: linear-gradient(rgba(0, 0, 0, 0.7),
+    rgba(0, 0, 0, 0.7)),
+    url('../images/aboutUs.jpg');
+    background-attachment: fixed;
+    background-size: cover;
+}

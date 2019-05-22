@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Gallery</title>
+    <link rel="icon" type="image/ico" th:href="@{/images/icons/favicon.ico}"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Droid+Sans:400,700" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.8.1/baguetteBox.min.css">
+    <link rel="stylesheet" th:href="@{css/fluid-gallery.css}">
+    <link th:href="@{css/backgrounds.css}" rel="stylesheet" type="text/css">
+</head>
+<body class="indexAndGalleryBgImage">
+<div class="container gallery-container">
+    <a href="javascript:history.back()">Back</a>
+    <h1>Examples our work</h1>
+    <p class="page-description text-center">For special offers, please contact the administrator</p>
+    <div class="tz-gallery">
+        <div class="row">
+            <div class="col-sm-12 col-md-4">
+                <a class="lightbox" href="../images/9Storeybuild.jpg">
+                    <img src="../images/9Storeybuild.jpg" alt="9 storey build">
+                </a>
+            </div>
+            <div class="col-sm-6 col-md-4">
+                <a class="lightbox" href="../images/5Storeybuild.jpg">
+                    <img src="../images/5Storeybuild.jpg" alt="5 storey build">
+                </a>
+            </div>
+            <div class="col-sm-6 col-md-4">
+                <a class="lightbox" href="../images/12Storeybuild.jpg">
+                    <img src="../images/12Storeybuild.jpg" alt="12 storey build">
+                </a>
+            </div>
+            <div class="col-sm-12 col-md-8">
+                <a class="lightbox" href="../images/hospital.png">
+                    <img src="../images/hospital.png" alt="hospital">
+                </a>
+            </div>
+            <div class="col-sm-6 col-md-4">
+                <a class="lightbox" href="../images/privateHome.jpg">
+                    <img src="../images/privateHome.jpg" alt="private home">
+                </a>
+            </div>
+            <div class="col-sm-6 col-md-4">
+                <a class="lightbox" href="../images/shoppingMall.jpg">
+                    <img src="../images/shoppingMall.jpg" alt="shopping mall">
+                </a>
+            </div>
+            <div class="col-sm-12 col-md-4">
+                <a class="lightbox" href="../images/9Storeybuild2.jpg">
+                    <img src="../images/9Storeybuild2.jpg" alt="9 storey build">
+                </a>
+            </div>
+            <div class="col-sm-6 col-md-4">
+                <a class="lightbox" href="../images/5Storeybuild2.jpg">
+                    <img src="../images/5Storeybuild2.jpg" alt="5 storey build">
+                </a>
+            </div>
+            <div class="col-sm-6 col-md-4">
+                <a class="lightbox" href="../images/12Storeybuild2.png">
+                    <img src="../images/12Storeybuild2.png" alt="12 storey build">
+                </a>
+            </div>
+            <div class="col-sm-12 col-md-8">
+                <a class="lightbox" href="../images/hospital2.png">
+                    <img src="../images/hospital2.png" alt="hospital">
+                </a>
+            </div>
+            <div class="col-sm-6 col-md-4">
+                <a class="lightbox" href="../images/privateHome2.jpg">
+                    <img src="../images/privateHome2.jpg" alt="private home">
+                </a>
+            </div>
+            <div class="col-sm-6 col-md-4">
+                <a class="lightbox" href="../images/shoppingMall2.jpg">
+                    <img src="../images/shoppingMall2.jpg" alt="shopping mall">
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.8.1/baguetteBox.min.js"></script>
+<script>
+    baguetteBox.run('.tz-gallery');
+</script>
+</body>
+</html>

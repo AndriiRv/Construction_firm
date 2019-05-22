@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin page</title>
+    <link rel="icon" type="image/ico" th:href="@{/images/icons/common.ico}"/>
+    <link th:href="@{css/bootstrap.min.css}" rel="stylesheet">
+    <link th:href="@{css/backToTop.css}" rel="stylesheet">
+</head>
+<body class="bg-light">
+<div class="container">
+    <div class="py-5 text-center">
+        <a href="/home">Back to main</a>
+        <h2>Admin page</h2>
+        <p class="lead">Manipulate with orders</p>
+        <div th:if="${#lists.isEmpty(orderList)}">
+            <h2>Hasn't any orders yet.</h2>
+        </div>
+    </div>
+    <div th:if="${not #lists.isEmpty(orderList)}">
+        <button id="hideShowButton" onclick="hideShowForm()">Hide form Update</button>
+    </div>
+    <div th:if="${not #lists.isEmpty(orderList)}">
+        <div class="row d-flex justify-content-center">
+            <div class="col-md-8 order-md-1 col-md-5 mb-3">
+                <form method="post" id="formUpdateWorker" action="/admin/UpdateWorker">
+                    <p class="lead">Match <b>Orders</b> with id <b>Unnecessary worker</b> through the table "All orders"
+                        (Id worker) just below</p>
+                    <div class="row" style="width: 125%;">
+                        <div class="col-md-5 mb-3">
+                            <label for="idOrderToWorker">Orders</label>
+                            <select size="4" name="orderToWorker" id="idOrderToWorker"
+                                    class="custom-select d-block w-100 select"
+                                    oninvalid="setCustomValidity('Select the order that needs to be updated')"
+                                    oninput="setCustomValidity('')" required>
+                                <option th:each="order: ${orderList}"
+                                        th:value="${order.id}"
+                                        th:text="${order.titleOfOrder} + ' - [' + ${order.idWorker} + '] ' + ${order.firstName} + ' ' + ${order.lastName}"></option>
+                            </select>
+                        </div>
+                        <div class="col-md-5 mb-3">
+                            <label for="idUnNecessaryWorker">Unnecessary worker</label>
+                            <select size="4" name="idUnNecessaryWorker" id="idUnNecessaryWorker"
+                                    class="custom-select d-block w-100 select"
+                                    oninvalid="setCustomValidity('Select the worker to replace')"
+                                    oninput="setCustomValidity('')" required>
+                                <option th:each="worker: ${busyWorkerList}"
+                                        th:value="${worker.id}"
+                                        th:text="${worker.title} + ' - [' + ${worker.id} + '] ' + ${worker.firstName} + ' ' + ${worker.lastName}"></option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="idWorker">New worker</label>
+                        <select size="4" name="idWorker" id="idWorker" class="custom-select d-block w-100"
+                                oninvalid="setCustomValidity('Select new worker')"
+                                oninput="setCustomValidity('')" required>
+                            <option th:each="worker: ${workerList}"
+                                    th:value="${worker.id}"
+                                    th:text="${worker.id} + '. ' + ${worker.firstName} + ' ' + ${worker.lastName}"></option>
+                        </select>
+                    </div>
+                    <button type="submit">Update worker</button>
+                    <button type="reset">Reset choosing</button>
+                </form>
+            </div>
+        </div>
+        <div class="row d-flex justify-content-center">
+            <div class="col-md-8 order-md-1 col-md-5 mb-3">
+                <form method="post" id="formUpdateMaterial" action="/admin/UpdateMaterial">
+                    <p class="lead">New <b>Material</b> here will be insert to order</p>
+                    <div class="row" style="width: 125%;">
+                        <div class="col-md-5 mb-3" th:object="${orderList}">
+                            <label for="idOrderToMaterial">Orders</label>
+                            <select size="4" name="orderToMaterial" id="idOrderToMaterial"
+                                    class="custom-select d-block w-100 select"
+                                    oninvalid="setCustomValidity('Select the order that needs to be updated')"
+                                    oninput="setCustomValidity('')" required>
+                                <option th:each="order: ${orderList}"
+                                        th:value="${order.id}"
+                                        th:text="${order.titleOfOrder} + ' - [' + ${order.idWorker} + '] ' + ${order.firstName} + ' ' + ${order.lastName}"></option>
+                            </select>
+                        </div>
+                        <div class="col-md-5 mb-3" th:object="${materialList}">
+                            <label for="idMaterial">Material</label>
+                            <select size="4" name="idMaterial" id="idMaterial"
+                                    class="custom-select d-block w-100"
+                                    oninvalid="setCustomValidity('Select new material')"
+                                    oninput="setCustomValidity('')" required>
+                                <option th:each="material: ${materialList}"
+                                        th:value="${material.id}"
+                                        th:text="${material.id} + '. ' + ${material.title} + ' - ' + ${#numbers.formatDecimal(material.price, 0, 'COMMA', 2, 'POINT')}"></option>
+                            </select>
+                        </div>
+                    </div>
+                    <button type="submit">Update material</button>
+                    <button type="reset">Reset choosing</button>
+                </form>
+            </div>
+        </div>
+        <div class="row d-flex justify-content-center">
+            <div class="col-md-8 order-md-1 col-md-5 mb-3">
+                <form method="post" id="formUpdateInstrument" action="/admin/UpdateInstrument">
+                    <p class="lead">New <b>Instrument</b> here will be insert to order</p>
+                    <div class="row" style="width: 125%;">
+                        <div class="col-md-5 mb-3" th:object="${orderList}">
+                            <label for="idOrderToInstrument">Orders</label>
+                            <select size="4" name="orderToInstrument" id="idOrderToInstrument"
+                                    class="custom-select d-block w-100 select"
+                                    oninvalid="setCustomValidity('Select the order that needs to be updated')"
+                                    oninput="setCustomValidity('')" required>
+                                <option th:each="order: ${orderList}"
+                                        th:value="${order.id}"
+                                        th:text="${order.titleOfOrder} + ' - [' + ${order.idWorker} + '] ' + ${order.firstName} + ' ' + ${order.lastName}"></option>
+                            </select>
+                        </div>
+                        <div class="mb-3" th:object="${instrumentList}">
+                            <label for="idInstrument">Instrument</label>
+                            <select size="4" name="idInstrument" id="idInstrument"
+                                    class="custom-select d-block w-100"
+                                    oninvalid="setCustomValidity('Select new instrument')"
+                                    oninput="setCustomValidity('')" required>
+                                <option th:each="instrument: ${instrumentList}"
+                                        th:value="${instrument.id}"
+                                        th:text="${instrument.id} + '. ' + ${instrument.title} + ' - ' + ${#numbers.formatDecimal(instrument.price, 0, 'COMMA', 2, 'POINT')}"></option>
+                            </select>
+                        </div>
+                    </div>
+                    <button type="submit">Update instrument</button>
+                    <button type="reset">Reset choosing</button>
+                </form>
+            </div>
+        </div>
+        <h2>All orders</h2>
+        <table class="table table-bordered table-hover">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Title of order</th>
+                <th>Customer</th>
+                <th>Worker</th>
+                <th>Material</th>
+                <th>Instrument</th>
+                <th>Date</th>
+                <th>Address</th>
+                <th>Price</th>
+                <th>Done</th>
+                <th>Delete</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="order: ${orderList}" class="table-danger">
+                <td th:text="${order.id}"></td>
+                <td th:text="${order.titleOfOrder}"></td>
+                <td th:text="${order.idCustomer} + '. ' + ${order.titleOfCustomer}"></td>
+                <td th:text="${order.idWorker} + '. ' + ${order.firstName} + ' ' + ${order.lastName}"></td>
+                <td th:text="${order.idMaterial} + '. ' + ${order.titleOfMaterial}"></td>
+                <td th:text="${order.idInstrument} + '. ' + ${order.titleOfInstrument}"></td>
+                <td th:text="${order.date}"></td>
+                <td th:text="${order.address}"></td>
+                <td th:text="${#numbers.formatDecimal(order.price, 0, 'COMMA', 2, 'POINT')}"></td>
+                <td>
+                    <span th:text="${order.done}"></span>
+                    <a th:if="!${order.done}"
+                       th:href="@{'/admin/doDone/idOrder=' + ${order.id}}">
+                        <span>Do done</span>
+                    </a>
+                    <a th:if="${order.done}"
+                       th:href="@{'/admin/doUnDone/idOrder=' + ${order.id}}">
+                        <span>Do undone</span>
+                    </a>
+                </td>
+                <td>
+                    <a th:href="@{'/admin/doDelete/idOrder=' + ${order.id} + '/idWorker=' + ${order.idWorker}}">
+                        <span>Delete</span>
+                    </a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <h3 th:if="${not #lists.isEmpty(busyWorkerList)}">
+        <h2>Busy workers</h2>
+        <table class="table table-bordered table-hover">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>First name</th>
+                <th>Last name</th>
+                <th>Telephone</th>
+                <th>Address</th>
+                <th>E-mail</th>
+                <th>Busy</th>
+                <th>Title of order</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="busyWorker: ${busyWorkerList}" class="table-warning">
+                <td th:text="${busyWorker.id}"></td>
+                <td th:text="${busyWorker.firstName}"></td>
+                <td th:text="${busyWorker.lastName}"></td>
+                <td th:text="${busyWorker.telephone}"></td>
+                <td th:text="${busyWorker.address}"></td>
+                <td th:text="${busyWorker.email}"></td>
+                <td th:text="${busyWorker.busy}"></td>
+                <td th:text="${busyWorker.title}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </h3>
+    <h2>Customers</h2>
+    <table class="table table-bordered table-hover">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>First name</th>
+            <th>Last name</th>
+            <th>Title</th>
+            <th>Address</th>
+            <th>Telephone</th>
+            <th>E-mail</th>
+            <th>Edrpou code</th>
+            <th>Role</th>
+            <th>Make user</th>
+            <th>Make admin</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="customer: ${customerList}" class="table-success">
+            <td th:text="${customer.id}"></td>
+            <td th:text="${customer.firstName}"></td>
+            <td th:text="${customer.lastName}"></td>
+            <td th:text="${customer.title}"></td>
+            <td th:text="${customer.address}"></td>
+            <td th:text="${customer.telephone}"></td>
+            <td th:text="${customer.email}"></td>
+            <td th:text="${customer.edrpouCode}"></td>
+            <td th:text="${customer.role}"></td>
+            <td><a th:href="@{'/admin/doUserIsUser/idUser=' + ${customer.id}}">
+                <span>Make user</span>
+            </a>
+            <td><a th:href="@{'/admin/doUserIsAdmin/idUser=' + ${customer.id}}">
+                <span>Make admin</span>
+            </a>
+        </tr>
+        </tbody>
+    </table>
+    <h2>Un busy workers</h2>
+    <a href="/excelWorkers">Excel</a>
+    <a href="/pdfWorkers">PDF</a>
+    <a>(All workers)</a>
+    <table class="table table-bordered table-hover">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>First name</th>
+            <th>Last name</th>
+            <th>Telephone</th>
+            <th>Address</th>
+            <th>E-mail</th>
+            <th>Busy</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="worker: ${workerList}" class="table-success">
+            <td th:text="${worker.id}"></td>
+            <td th:text="${worker.firstName}"></td>
+            <td th:text="${worker.lastName}"></td>
+            <td th:text="${worker.telephone}"></td>
+            <td th:text="${worker.address}"></td>
+            <td th:text="${worker.email}"></td>
+            <td th:text="${worker.busy}"></td>
+        </tr>
+        </tbody>
+    </table>
+    <h2>Instruments</h2>
+    <a href="/excelInstruments">Excel</a>
+    <a href="/pdfInstruments">PDF</a>
+    <table class="table table-bordered table-hover">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Title</th>
+            <th>Purchase price</th>
+            <th>Date of purchase</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="instrument: ${instrumentList}" class="table-success">
+            <td th:text="${instrument.id}"></td>
+            <td th:text="${instrument.title}"></td>
+            <td th:text="${#numbers.formatDecimal(instrument.price, 0, 'COMMA', 2, 'POINT')}"></td>
+            <td th:text="${instrument.date}"></td>
+        </tr>
+        </tbody>
+    </table>
+    <h2>Materials</h2>
+    <a href="/excelMaterials">Excel</a>
+    <a href="/pdfMaterials">PDF</a>
+    <table class="table table-bordered table-hover">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Title</th>
+            <th>Purchase price</th>
+            <th>Date of purchase</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="material: ${materialList}" class="table-success">
+            <td th:text="${material.id}"></td>
+            <td th:text="${material.title}"></td>
+            <td th:text="${#numbers.formatDecimal(material.price, 0, 'COMMA', 2, 'POINT')}"></td>
+            <td th:text="${material.date}"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<a href="#" id="back-to-top" title="Back to top">&uarr;</a>
+<script th:src="@{/js/hideShowFormUpdateOrder.js}"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script th:src="@{/js/choiceWorkerByOrder.js}"></script>
+<script th:src="@{/js/backToTop.js}"></script>
+</body>
+</html>

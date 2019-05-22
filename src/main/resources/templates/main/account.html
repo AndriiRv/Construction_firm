@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>My orders</title>
+    <link rel="icon" type="image/ico" th:href="@{/images/icons/common.ico}"/>
+    <link th:href="@{css/bootstrap.min.css}" rel="stylesheet">
+    <link th:href="@{css/imageOnOrderAndOnAccount.css}" rel="stylesheet" type="text/css">
+    <link th:href="@{css/backToTop.css}" rel="stylesheet">
+</head>
+<body class="bg-light">
+<div class="container">
+    <div class="py-5 text-center">
+        <a href="/home">Back to main</a>
+        <h2>Executing orders</h2>
+        <p class="lead">Your orders</p>
+    </div>
+    <div class="row d-flex justify-content-center">
+        <h3 th:if="${not #lists.isEmpty(acceptedOrderList)}">
+            <h2>All your orders</h2>
+            <table class="table table-bordered table-hover">
+                <thead>
+                <tr>
+                    <th style="width: 10%" scope="col">ID</th>
+                    <th style="width: 20%" scope="col">Title of order</th>
+                    <th style="width: 30%" scope="col">Date of order</th>
+                    <th style="width: 30%" scope="col">Address</th>
+                    <th style="width: 30%" scope="col">Price</th>
+                    <th style="width: 10%" scope="col">Done</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="order: ${acceptedOrderList}" class="table-success">
+                    <td th:text="${order.id}"></td>
+                    <td class="classTitle"><a href="#" th:text="${order.title}"></a></td>
+                    <td th:text="${order.date}"></td>
+                    <td th:text="${order.address}"></td>
+                    <td th:text="${#numbers.formatDecimal(order.price, 0, 'COMMA', 2, 'POINT')}"></td>
+                    <td th:text="${order.done}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </h3>
+        <img class="mb-4" src="" id="preview" alt="" width="480" height="270"
+             style="cursor: pointer; display: none; border: 2px solid black;"/>
+        <div class="overlay"><span class="helper"></span><img src="" alt="" style="cursor: pointer"></div>
+    </div>
+</div>
+<div class="py-5 text-center">
+    <h3 th:if="${#lists.isEmpty(acceptedOrderList)}">
+        <h2>You haven't any orders yet.</h2>
+    </h3>
+</div>
+<a href="#" id="back-to-top" title="Back to top">&uarr;</a>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script th:src="@{/js/manipulationWithImage/visualChoiceInAccount.js}"></script>
+<script th:src="@{/js/backToTop.js}"></script>
+</body>
+</html>

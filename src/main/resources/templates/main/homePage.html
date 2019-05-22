@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Home</title>
+    <link rel="icon" type="image/ico" th:href="@{/images/icons/common.ico}"/>
+    <link th:href="@{css/bootstrap.min.css}" rel="stylesheet">
+    <link th:href="@{css/cover.css}" rel="stylesheet">
+    <link th:href="@{css/homePage.css}" rel="stylesheet">
+    <link th:href="@{css/backgrounds.css}" rel="stylesheet" type="text/css">
+</head>
+<body class="text-center" id="homePageBgImage">
+<div class="cover-container d-flex h-100 p-3 mx-auto flex-column">
+    <header class="masthead mb-auto">
+        <nav class="nav nav-masthead justify-content-center">
+            <div class="dropdown nav-link active">
+                <p th:text="${username}"></p>
+                <div class="dropdown-content">
+                    <a class="nav-link active" href="/account">My order</a>
+                    <a class="nav-link active" href="/edit">Edit account</a>
+                    <a class="nav-link active" href="/logout">Logout</a>
+                </div>
+            </div>
+            <a th:if="${role}==ADMIN" class="nav-link active" href="/admin">Check all order [ADMIN]</a>
+            <a class="nav-link active" href="/order">Order</a>
+            <a class="nav-link active" href="/feedback">Feedbacks</a>
+            <a class="nav-link active" href="/gallery">Gallery</a>
+            <a th:if="${role}==ADMIN" class="nav-link active" href="/report">Report [ADMIN]</a>
+        </nav>
+    </header>
+    <main role="main" class="inner cover">
+        <h1 class="cover-heading">Welcome, again!</h1>
+        <p class="lead">To the next chapter in construction</p>
+        <p class="lead">
+            <a href="/about" class="btn btn-lg btn-secondary">About us</a>
+            <a href="/order" class="btn btn-lg btn-secondary">Get Order</a>
+        </p>
+    </main>
+    <footer class="mastfoot mt-auto">
+        <div class="inner">
+            <p>Construction firm for <a href="http://geekhub.ck.ua">Geekhub</a>, by <a
+                    href="https://www.facebook.com/andrey.reva">Andrii Reva</a>.</p>
+        </div>
+    </footer>
+</div>
+</body>
+</html>
